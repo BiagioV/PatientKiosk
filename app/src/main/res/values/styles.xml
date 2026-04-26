@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PatientKiosk" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowBackground">@color/clinical_surface</item>
+        <item name="android:statusBarColor">@color/clinical_blue_dark</item>
+        <item name="android:navigationBarColor">@color/clinical_blue_dark</item>
+        <item name="android:colorAccent">@color/clinical_blue</item>
+    </style>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="clinical_blue">#0B5CAD</color>
+    <color name="clinical_blue_dark">#073E75</color>
+    <color name="clinical_surface">#F4F8FB</color>
+    <color name="clinical_card">#FFFFFF</color>
+    <color name="clinical_text">#1F2933</color>
+    <color name="clinical_muted">#607080</color>
+    <color name="clinical_error">#B00020</color>
+</resources>

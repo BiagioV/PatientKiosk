@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PatientKiosk</string>
+    <string name="patient_code_hint">Codice paziente</string>
+    <string name="start_button">Inizia</string>
+    <string name="select_questionnaire">Seleziona questionario</string>
+    <string name="next_question">Prossima domanda</string>
+    <string name="previous_question">Indietro</string>
+    <string name="restart">Nuova compilazione</string>
+    <string name="change_questionnaire">Cambia questionario</string>
+</resources>
