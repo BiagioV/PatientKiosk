@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import it.uninsubria.patientkiosk.model.Questionnaire
 import it.uninsubria.patientkiosk.scoring.ScoreCalculator
+import it.uninsubria.patientkiosk.validation.PatientCodeValidator
 
 class KioskViewModel : ViewModel() {
 
@@ -22,19 +23,24 @@ class KioskViewModel : ViewModel() {
     }
 
     fun submitPatientCode(rawCode: String) {
-        val code = rawCode.trim().uppercase()
-        if (!isValidPatientCode(code)) {
+        val validationResult = PatientCodeValidator.validate(rawCode)
+
+        if (!validationResult.isValid) {
             _state.value = KioskUiState.Error(
-                "Inserisci un codice paziente anonimo da 3 a 20 caratteri. Sono ammessi lettere, numeri, _ e -."
+                validationResult.errorMessage ?: "Codice paziente non valido."
             )
             return
         }
 
-        patientCode = code
+        patientCode = validationResult.normalizedCode
         selectedQuestionnaire = null
         currentQuestionIndex = 0
         answers.clear()
-        _state.value = KioskUiState.QuestionnaireSelection(patientCode, questionnaires)
+
+        _state.value = KioskUiState.QuestionnaireSelection(
+            patientCode = patientCode,
+            questionnaires = questionnaires
+        )
     }
 
     fun selectQuestionnaire(questionnaire: Questionnaire) {
@@ -47,6 +53,7 @@ class KioskViewModel : ViewModel() {
     fun saveCurrentAnswer(score: Int?) {
         val questionnaire = selectedQuestionnaire ?: return
         val question = questionnaire.questions[currentQuestionIndex]
+
         if (score == null) {
             answers.remove(question.id)
         } else {
@@ -57,6 +64,7 @@ class KioskViewModel : ViewModel() {
     fun nextQuestion() {
         val questionnaire = selectedQuestionnaire ?: return
         val question = questionnaire.questions[currentQuestionIndex]
+
         if (!answers.containsKey(question.id)) {
             _state.value = KioskUiState.Error("Seleziona una risposta prima di proseguire.")
             return
@@ -69,9 +77,15 @@ class KioskViewModel : ViewModel() {
             runCatching {
                 ScoreCalculator.calculate(questionnaire, answers)
             }.onSuccess { result ->
-                _state.value = KioskUiState.Result(patientCode, questionnaire, result)
+                _state.value = KioskUiState.Result(
+                    patientCode = patientCode,
+                    questionnaire = questionnaire,
+                    result = result
+                )
             }.onFailure { error ->
-                _state.value = KioskUiState.Error(error.message ?: "Errore nel calcolo del risultato.")
+                _state.value = KioskUiState.Error(
+                    error.message ?: "Errore nel calcolo del risultato."
+                )
             }
         }
     }
@@ -87,7 +101,11 @@ class KioskViewModel : ViewModel() {
         selectedQuestionnaire = null
         currentQuestionIndex = 0
         answers.clear()
-        _state.value = KioskUiState.QuestionnaireSelection(patientCode, questionnaires)
+
+        _state.value = KioskUiState.QuestionnaireSelection(
+            patientCode = patientCode,
+            questionnaires = questionnaires
+        )
     }
 
     fun restart() {
@@ -95,14 +113,21 @@ class KioskViewModel : ViewModel() {
         selectedQuestionnaire = null
         currentQuestionIndex = 0
         answers.clear()
+
         _state.value = KioskUiState.PatientIdentification
     }
 
     fun clearErrorAndRefresh() {
         val questionnaire = selectedQuestionnaire
+
         when {
             questionnaire != null -> emitQuestionForm()
-            patientCode.isNotBlank() -> _state.value = KioskUiState.QuestionnaireSelection(patientCode, questionnaires)
+            patientCode.isNotBlank() -> {
+                _state.value = KioskUiState.QuestionnaireSelection(
+                    patientCode = patientCode,
+                    questionnaires = questionnaires
+                )
+            }
             else -> _state.value = KioskUiState.PatientIdentification
         }
     }
@@ -110,15 +135,12 @@ class KioskViewModel : ViewModel() {
     private fun emitQuestionForm() {
         val questionnaire = selectedQuestionnaire ?: return
         val currentQuestion = questionnaire.questions[currentQuestionIndex]
+
         _state.value = KioskUiState.QuestionForm(
             patientCode = patientCode,
             questionnaire = questionnaire,
             currentIndex = currentQuestionIndex,
             selectedAnswerScore = answers[currentQuestion.id]
         )
-    }
-
-    private fun isValidPatientCode(code: String): Boolean {
-        return Regex("^[A-Z0-9_-]{3,20}$").matches(code)
     }
 }
