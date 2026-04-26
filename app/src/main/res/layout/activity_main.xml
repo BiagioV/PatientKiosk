@@ -143,18 +143,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="2. Selezione questionario"
+                android:text="@string/questionnaire_selection_title"
                 android:textColor="@color/clinical_text"
                 android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/questionnaire_selection_intro"
+                android:textColor="@color/clinical_muted"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/card_background"
+                android:padding="12dp"
+                android:text="@string/questionnaire_selection_help"
+                android:textColor="@color/clinical_blue_dark"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ListView
                 android:id="@+id/questionnaireList"
                 android:layout_width="match_parent"
-                android:layout_height="420dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="460dp"
+                android:layout_marginTop="18dp"
                 android:choiceMode="singleChoice"
-                android:dividerHeight="10dp" />
+                android:divider="@android:color/transparent"
+                android:dividerHeight="12dp" />
         </LinearLayout>
 
         <LinearLayout

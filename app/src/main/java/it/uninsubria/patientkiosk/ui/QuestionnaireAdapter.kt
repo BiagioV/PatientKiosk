@@ -30,10 +30,16 @@ class QuestionnaireAdapter(
             .inflate(R.layout.item_questionnaire, parent, false)
 
         val item = getItem(position)
+
         view.findViewById<TextView>(R.id.itemTitleText).text = item.title
         view.findViewById<TextView>(R.id.itemDescriptionText).text = item.description
-        view.findViewById<TextView>(R.id.itemMetaText).text =
-            "${item.questions.size} domande · massimo ${item.maxScore} punti"
+        view.findViewById<TextView>(R.id.itemMetaText).text = context.getString(
+            R.string.questionnaire_item_meta,
+            item.questions.size,
+            item.maxScore
+        )
+        view.findViewById<TextView>(R.id.itemActionText).text =
+            context.getString(R.string.questionnaire_item_action)
 
         return view
     }
