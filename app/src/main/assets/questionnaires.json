@@ -1,0 +1,227 @@
+{
+  "questionnaires": [
+    {
+      "id": "dlqi_demo",
+      "title": "DLQI - versione didattica",
+      "description": "Valutazione dell'impatto della malattia cutanea sulla qualità di vita nell'ultima settimana.",
+      "source": "Finlay AY, Khan GK. Dermatology Life Quality Index; Cardiff University DLQI. Testi didattici/parafrasati: sostituire con versione ufficiale/licenziata prima di uso clinico.",
+      "scoringType": "SUM",
+      "maxScore": 30,
+      "interpretations": [
+        { "min": 0, "max": 1, "label": "Nessun impatto", "description": "Nessun effetto sulla vita del paziente." },
+        { "min": 2, "max": 5, "label": "Piccolo impatto", "description": "Piccolo effetto sulla vita del paziente." },
+        { "min": 6, "max": 10, "label": "Impatto moderato", "description": "Effetto moderato sulla vita del paziente." },
+        { "min": 11, "max": 20, "label": "Forte impatto", "description": "Effetto molto rilevante sulla vita del paziente." },
+        { "min": 21, "max": 30, "label": "Impatto estremamente forte", "description": "Effetto estremamente rilevante sulla vita del paziente." }
+      ],
+      "questions": [
+        {
+          "id": "dlqi_1",
+          "text": "Nell'ultima settimana, quanto i sintomi della pelle hanno causato fastidio o disagio?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        },
+        {
+          "id": "dlqi_2",
+          "text": "Quanto la condizione cutanea ha influenzato il suo umore o la sicurezza in sé?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        },
+        {
+          "id": "dlqi_3",
+          "text": "Quanto ha reso più difficili le normali attività quotidiane?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        },
+        {
+          "id": "dlqi_4",
+          "text": "Quanto ha influenzato la scelta degli abiti o il modo di vestirsi?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        },
+        {
+          "id": "dlqi_5",
+          "text": "Quanto ha limitato attività sociali, hobby o tempo libero?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        },
+        {
+          "id": "dlqi_6",
+          "text": "Quanto ha interferito con sport o attività fisica?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        },
+        {
+          "id": "dlqi_7",
+          "text": "Quanto ha creato problemi nello studio, nel lavoro o nelle attività domestiche?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        },
+        {
+          "id": "dlqi_8",
+          "text": "Quanto ha influenzato i rapporti con familiari, amici o altre persone?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        },
+        {
+          "id": "dlqi_9",
+          "text": "Quanto ha influenzato la vita personale o intima?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        },
+        {
+          "id": "dlqi_10",
+          "text": "Quanto la cura o il trattamento della pelle ha creato difficoltà pratiche?",
+          "answers": [
+            { "id": "a0", "label": "Per niente (0)", "score": 0 },
+            { "id": "a1", "label": "Poco (1)", "score": 1 },
+            { "id": "a2", "label": "Abbastanza (2)", "score": 2 },
+            { "id": "a3", "label": "Moltissimo (3)", "score": 3 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "who5_demo",
+      "title": "WHO-5 Well-Being Index - demo",
+      "description": "Questionario breve sul benessere psicologico generale nelle ultime due settimane.",
+      "source": "World Health Organization, WHO-5 Well-Being Index. Testi didattici/parafrasati: sostituire con versione ufficiale se richiesta.",
+      "scoringType": "WHO5_PERCENTAGE",
+      "maxScore": 100,
+      "interpretations": [
+        { "min": 0, "max": 49, "label": "Benessere basso", "description": "Valore sotto la soglia indicativa: può richiedere approfondimento clinico." },
+        { "min": 50, "max": 100, "label": "Benessere adeguato", "description": "Valore sopra la soglia indicativa." }
+      ],
+      "questions": [
+        {
+          "id": "who5_1",
+          "text": "Nelle ultime due settimane mi sono sentito sereno e di buon umore.",
+          "answers": [
+            { "id": "a0", "label": "Mai (0)", "score": 0 },
+            { "id": "a1", "label": "Qualche volta (1)", "score": 1 },
+            { "id": "a2", "label": "Meno della metà del tempo (2)", "score": 2 },
+            { "id": "a3", "label": "Più della metà del tempo (3)", "score": 3 },
+            { "id": "a4", "label": "Quasi sempre (4)", "score": 4 },
+            { "id": "a5", "label": "Sempre (5)", "score": 5 }
+          ]
+        },
+        {
+          "id": "who5_2",
+          "text": "Nelle ultime due settimane mi sono sentito calmo e rilassato.",
+          "answers": [
+            { "id": "a0", "label": "Mai (0)", "score": 0 },
+            { "id": "a1", "label": "Qualche volta (1)", "score": 1 },
+            { "id": "a2", "label": "Meno della metà del tempo (2)", "score": 2 },
+            { "id": "a3", "label": "Più della metà del tempo (3)", "score": 3 },
+            { "id": "a4", "label": "Quasi sempre (4)", "score": 4 },
+            { "id": "a5", "label": "Sempre (5)", "score": 5 }
+          ]
+        },
+        {
+          "id": "who5_3",
+          "text": "Nelle ultime due settimane mi sono sentito attivo e con energia.",
+          "answers": [
+            { "id": "a0", "label": "Mai (0)", "score": 0 },
+            { "id": "a1", "label": "Qualche volta (1)", "score": 1 },
+            { "id": "a2", "label": "Meno della metà del tempo (2)", "score": 2 },
+            { "id": "a3", "label": "Più della metà del tempo (3)", "score": 3 },
+            { "id": "a4", "label": "Quasi sempre (4)", "score": 4 },
+            { "id": "a5", "label": "Sempre (5)", "score": 5 }
+          ]
+        },
+        {
+          "id": "who5_4",
+          "text": "Nelle ultime due settimane mi sono svegliato riposato.",
+          "answers": [
+            { "id": "a0", "label": "Mai (0)", "score": 0 },
+            { "id": "a1", "label": "Qualche volta (1)", "score": 1 },
+            { "id": "a2", "label": "Meno della metà del tempo (2)", "score": 2 },
+            { "id": "a3", "label": "Più della metà del tempo (3)", "score": 3 },
+            { "id": "a4", "label": "Quasi sempre (4)", "score": 4 },
+            { "id": "a5", "label": "Sempre (5)", "score": 5 }
+          ]
+        },
+        {
+          "id": "who5_5",
+          "text": "Nelle ultime due settimane la mia giornata è stata piena di cose interessanti.",
+          "answers": [
+            { "id": "a0", "label": "Mai (0)", "score": 0 },
+            { "id": "a1", "label": "Qualche volta (1)", "score": 1 },
+            { "id": "a2", "label": "Meno della metà del tempo (2)", "score": 2 },
+            { "id": "a3", "label": "Più della metà del tempo (3)", "score": 3 },
+            { "id": "a4", "label": "Quasi sempre (4)", "score": 4 },
+            { "id": "a5", "label": "Sempre (5)", "score": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hads_demo",
+      "title": "HADS - demo ansia/depressione",
+      "description": "Screening didattico di ansia e depressione con due sottoscale separate.",
+      "source": "Zigmond AS, Snaith RP. Hospital Anxiety and Depression Scale; ePROVIDE/Mapi Research Trust. Testi didattici/parafrasati: usare versione ufficiale/licenziata per uso clinico.",
+      "scoringType": "HADS_SUBSCALES",
+      "maxScore": 42,
+      "interpretations": [
+        { "category": "A", "min": 0, "max": 7, "label": "Normale", "description": "Sottoscala ansia in fascia normale." },
+        { "category": "A", "min": 8, "max": 10, "label": "Borderline", "description": "Sottoscala ansia in fascia borderline." },
+        { "category": "A", "min": 11, "max": 21, "label": "Elevata", "description": "Sottoscala ansia sopra la soglia indicativa." },
+        { "category": "D", "min": 0, "max": 7, "label": "Normale", "description": "Sottoscala depressione in fascia normale." },
+        { "category": "D", "min": 8, "max": 10, "label": "Borderline", "description": "Sottoscala depressione in fascia borderline." },
+        { "category": "D", "min": 11, "max": 21, "label": "Elevata", "description": "Sottoscala depressione sopra la soglia indicativa." }
+      ],
+      "questions": [
+        { "id": "hads_a1", "category": "A", "text": "Mi sono sentito teso o sotto pressione.", "answers": [ { "id": "a0", "label": "Per niente (0)", "score": 0 }, { "id": "a1", "label": "Qualche volta (1)", "score": 1 }, { "id": "a2", "label": "Spesso (2)", "score": 2 }, { "id": "a3", "label": "Quasi sempre (3)", "score": 3 } ] },
+        { "id": "hads_d1", "category": "D", "text": "Ho provato piacere nelle cose che normalmente mi interessano.", "answers": [ { "id": "a0", "label": "Come sempre (0)", "score": 0 }, { "id": "a1", "label": "Un po' meno (1)", "score": 1 }, { "id": "a2", "label": "Molto meno (2)", "score": 2 }, { "id": "a3", "label": "Quasi per niente (3)", "score": 3 } ] },
+        { "id": "hads_a2", "category": "A", "text": "Ho avuto una sensazione di paura o preoccupazione improvvisa.", "answers": [ { "id": "a0", "label": "Mai (0)", "score": 0 }, { "id": "a1", "label": "Ogni tanto (1)", "score": 1 }, { "id": "a2", "label": "Abbastanza spesso (2)", "score": 2 }, { "id": "a3", "label": "Molto spesso (3)", "score": 3 } ] },
+        { "id": "hads_d2", "category": "D", "text": "Sono riuscito a ridere o vedere il lato positivo delle cose.", "answers": [ { "id": "a0", "label": "Come sempre (0)", "score": 0 }, { "id": "a1", "label": "Un po' meno (1)", "score": 1 }, { "id": "a2", "label": "Molto meno (2)", "score": 2 }, { "id": "a3", "label": "Quasi mai (3)", "score": 3 } ] },
+        { "id": "hads_a3", "category": "A", "text": "Pensieri preoccupanti mi sono passati spesso per la mente.", "answers": [ { "id": "a0", "label": "Raramente o mai (0)", "score": 0 }, { "id": "a1", "label": "Qualche volta (1)", "score": 1 }, { "id": "a2", "label": "Spesso (2)", "score": 2 }, { "id": "a3", "label": "Quasi sempre (3)", "score": 3 } ] },
+        { "id": "hads_d3", "category": "D", "text": "Mi sono sentito rallentato o con poca iniziativa.", "answers": [ { "id": "a0", "label": "Mai (0)", "score": 0 }, { "id": "a1", "label": "A volte (1)", "score": 1 }, { "id": "a2", "label": "Spesso (2)", "score": 2 }, { "id": "a3", "label": "Quasi sempre (3)", "score": 3 } ] },
+        { "id": "hads_a4", "category": "A", "text": "Mi sono sentito agitato o incapace di stare tranquillo.", "answers": [ { "id": "a0", "label": "Per niente (0)", "score": 0 }, { "id": "a1", "label": "Poco (1)", "score": 1 }, { "id": "a2", "label": "Abbastanza (2)", "score": 2 }, { "id": "a3", "label": "Molto (3)", "score": 3 } ] },
+        { "id": "hads_d4", "category": "D", "text": "Ho guardato al futuro con interesse.", "answers": [ { "id": "a0", "label": "Come sempre (0)", "score": 0 }, { "id": "a1", "label": "Un po' meno (1)", "score": 1 }, { "id": "a2", "label": "Molto meno (2)", "score": 2 }, { "id": "a3", "label": "Quasi per niente (3)", "score": 3 } ] },
+        { "id": "hads_a5", "category": "A", "text": "Ho avuto episodi di ansia intensa o panico.", "answers": [ { "id": "a0", "label": "Mai (0)", "score": 0 }, { "id": "a1", "label": "Raramente (1)", "score": 1 }, { "id": "a2", "label": "A volte (2)", "score": 2 }, { "id": "a3", "label": "Spesso (3)", "score": 3 } ] },
+        { "id": "hads_d5", "category": "D", "text": "Mi sono interessato alla cura di me e al mio aspetto.", "answers": [ { "id": "a0", "label": "Come sempre (0)", "score": 0 }, { "id": "a1", "label": "Un po' meno (1)", "score": 1 }, { "id": "a2", "label": "Molto meno (2)", "score": 2 }, { "id": "a3", "label": "Quasi per niente (3)", "score": 3 } ] },
+        { "id": "hads_a6", "category": "A", "text": "Ho avuto una sensazione di tensione fisica o nervosismo.", "answers": [ { "id": "a0", "label": "Mai (0)", "score": 0 }, { "id": "a1", "label": "Qualche volta (1)", "score": 1 }, { "id": "a2", "label": "Spesso (2)", "score": 2 }, { "id": "a3", "label": "Quasi sempre (3)", "score": 3 } ] },
+        { "id": "hads_d6", "category": "D", "text": "Ho provato interesse per attività piacevoli, come lettura, TV o hobby.", "answers": [ { "id": "a0", "label": "Come sempre (0)", "score": 0 }, { "id": "a1", "label": "Un po' meno (1)", "score": 1 }, { "id": "a2", "label": "Molto meno (2)", "score": 2 }, { "id": "a3", "label": "Quasi per niente (3)", "score": 3 } ] },
+        { "id": "hads_a7", "category": "A", "text": "Mi sono sentito improvvisamente spaventato senza motivo chiaro.", "answers": [ { "id": "a0", "label": "Mai (0)", "score": 0 }, { "id": "a1", "label": "Raramente (1)", "score": 1 }, { "id": "a2", "label": "A volte (2)", "score": 2 }, { "id": "a3", "label": "Spesso (3)", "score": 3 } ] },
+        { "id": "hads_d7", "category": "D", "text": "Mi sono sentito capace di godermi momenti piacevoli della giornata.", "answers": [ { "id": "a0", "label": "Come sempre (0)", "score": 0 }, { "id": "a1", "label": "Un po' meno (1)", "score": 1 }, { "id": "a2", "label": "Molto meno (2)", "score": 2 }, { "id": "a3", "label": "Quasi per niente (3)", "score": 3 } ] }
+      ]
+    }
+  ]
+}
