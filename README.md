@@ -1,104 +1,181 @@
 # PatientKiosk
 
-Applicazione Android nativa in Kotlin per la compilazione guidata di questionari clinici da tablet.
+**PatientKiosk** è un'applicazione Android nativa sviluppata in Kotlin per la compilazione guidata di questionari clinici da parte di pazienti in ambito dermatologico.
 
-## Obiettivo didattico
+Il progetto è stato realizzato per il corso di **Programmazione di Dispositivi Mobili** dell'Università degli Studi dell'Insubria.
 
-Il progetto implementa il flusso richiesto dal tema d'esame:
+## Obiettivo del progetto
 
-1. identificazione anonima del paziente;
-2. selezione del questionario;
-3. compilazione guidata domanda per domanda;
-4. calcolo automatico dello score;
-5. visualizzazione del risultato e dell'interpretazione.
+L'app simula un kiosk/tablet utilizzabile in sala d'attesa o durante la visita medica.
 
-## Tecnologie usate
+Il paziente può:
+
+1. inserire un codice identificativo;
+2. scegliere un questionario clinico;
+3. compilare le domande in modo guidato;
+4. ottenere automaticamente il punteggio;
+5. visualizzare una semplice interpretazione del risultato.
+
+## Focus del progetto
+
+Il progetto è stato sviluppato ponendo attenzione a:
+
+- usabilità clinica;
+- correttezza dei calcoli;
+- robustezza dell'interfaccia;
+- gestione degli errori;
+- modularità dei questionari;
+- separazione tra contenuto clinico e logica software.
+
+## Tecnologie utilizzate
 
 - Kotlin
 - Android Studio
-- XML layout
-- `ListView` + `BaseAdapter`
-- `ViewModel` + `LiveData`
-- JSON locale in `assets/questionnaires.json`
-- Logica di calcolo separata in `ScoreCalculator`
+- Android SDK
+- XML Layout
+- ViewModel
+- LiveData
+- ListView
+- Adapter personalizzato
+- JSON locale in `assets`
+- Architettura semplice ispirata a MVVM
 
-## Struttura principale
+## Questionari disponibili
+
+L'app include questionari dimostrativi caricati da file JSON:
+
+- DLQI demo
+- WHO-5 demo
+- HADS demo
+
+I testi presenti nel progetto sono versioni didattiche/parafrasate. Per un utilizzo reale sarebbe necessario utilizzare le versioni ufficiali e autorizzate dei questionari clinici.
+
+## Flusso applicativo
 
 ```text
-app/src/main/java/it/uninsubria/patientkiosk/
-├── MainActivity.kt
-├── data/
-│   └── QuestionnaireRepository.kt
-├── model/
-│   └── Questionnaire.kt
-├── scoring/
-│   ├── ScoreCalculator.kt
-│   └── ScoreResult.kt
-├── ui/
-│   └── QuestionnaireAdapter.kt
-└── viewmodel/
-    ├── KioskUiState.kt
-    └── KioskViewModel.kt
+Codice paziente
+        ↓
+Selezione questionario
+        ↓
+Compilazione domande
+        ↓
+Calcolo score
+        ↓
+Risultato finale
+```
+
+## Struttura del progetto
+
+```text
+PatientKiosk/
+├── app/
+│   └── src/
+│       └── main/
+│           ├── assets/
+│           │   └── questionnaires.json
+│           ├── java/it/uninsubria/patientkiosk/
+│           │   ├── MainActivity.kt
+│           │   ├── data/
+│           │   │   └── QuestionnaireRepository.kt
+│           │   ├── model/
+│           │   │   └── Questionnaire.kt
+│           │   ├── scoring/
+│           │   │   ├── ScoreCalculator.kt
+│           │   │   └── ScoreResult.kt
+│           │   ├── ui/
+│           │   │   └── QuestionnaireAdapter.kt
+│           │   └── viewmodel/
+│           │       ├── KioskUiState.kt
+│           │       └── KioskViewModel.kt
+│           └── res/
+│               ├── layout/
+│               ├── values/
+│               └── drawable/
+├── docs/
+│   ├── TESTING.md
+│   ├── SOURCES.md
+│   └── EXAM_REQUIREMENTS.md
+├── README.md
+└── .gitignore
 ```
 
 ## Modularità
 
-I questionari sono caricati da JSON. Per aggiungere un nuovo questionario, si può aggiungere un nuovo oggetto dentro:
+I questionari sono definiti nel file:
 
 ```text
 app/src/main/assets/questionnaires.json
 ```
 
-La UI non contiene le formule cliniche. I calcoli sono isolati in:
+Ogni questionario contiene:
+
+- identificativo;
+- nome;
+- descrizione;
+- domande;
+- risposte possibili;
+- punteggio associato alle risposte;
+- tipo di calcolo;
+- interpretazioni del risultato.
+
+Questa struttura permette di aggiungere nuovi questionari modificando principalmente il file JSON, senza riscrivere la logica principale dell'app.
+
+## Calcolo degli score
+
+La logica di calcolo è separata dalla UI ed è contenuta in:
 
 ```text
-ScoreCalculator.kt
+app/src/main/java/it/uninsubria/patientkiosk/scoring/ScoreCalculator.kt
 ```
 
-## Note importanti sui testi dei questionari
-
-Il file JSON contiene versioni didattiche/parafrasate per mostrare il funzionamento dell'app. Per una consegna finale o per uso clinico reale, sostituire i testi con le versioni ufficiali autorizzate/licenziate dei questionari scelti.
-
-Le formule e le fasce di interpretazione sono tenute separate dai testi, così il contenuto può essere aggiornato senza modificare l'architettura dell'app.
-
-## Workflow Git consigliato
-
-Esempio di sviluppo con commit frequenti:
-
-```bash
-git init
-git add .
-git commit -m "Initial Android Kotlin project"
-
-git checkout -b feature/questionnaire-json
-git add .
-git commit -m "Add questionnaire JSON loader"
-
-git checkout -b feature/scoring-engine
-git add .
-git commit -m "Add score calculator and interpretation bands"
-
-git checkout -b feature/patient-flow
-git add .
-git commit -m "Add patient identification and questionnaire flow"
-
-git checkout -b feature/ui-polish
-git add .
-git commit -m "Improve tablet UI and validation messages"
-```
-
-Se il gruppo ha più componenti, ogni persona dovrebbe lavorare su branch/commit propri, per esempio:
-
-- componente 1: UI e layout;
-- componente 2: modello dati e JSON;
-- componente 3: calcoli e test manuali;
-- componente 4: documentazione e Git.
+Questo rende il progetto più ordinato, testabile e manutenibile.
 
 ## Come aprire il progetto
 
 1. Aprire Android Studio.
 2. Selezionare `Open`.
 3. Aprire la cartella `PatientKiosk`.
-4. Attendere il Gradle sync.
-5. Avviare su emulatore tablet o dispositivo Android.
+4. Attendere il completamento del Gradle Sync.
+5. Avviare un emulatore Android o collegare un dispositivo fisico.
+6. Premere `Run`.
 
+## Come eseguire l'app
+
+Dopo l'avvio:
+
+1. inserire un codice paziente, ad esempio `PZ001`;
+2. selezionare un questionario;
+3. rispondere alle domande;
+4. visualizzare il risultato finale.
+
+## Gestione Git
+
+Il progetto viene gestito tramite Git e pubblicato su GitHub.
+
+Repository:
+
+```text
+https://github.com/BiagioV/PatientKiosk
+```
+
+Durante lo sviluppo vengono effettuati commit progressivi per documentare le modifiche realizzate.
+
+## Documentazione
+
+La documentazione aggiuntiva si trova nella cartella:
+
+```text
+docs/
+```
+
+File principali:
+
+- `TESTING.md`: test manuali e casi di verifica;
+- `SOURCES.md`: fonti e riferimenti;
+- `EXAM_REQUIREMENTS.md`: requisiti del progetto e loro copertura.
+
+## Disclaimer
+
+PatientKiosk è un progetto didattico.
+
+Non è un dispositivo medico e non deve essere utilizzato per diagnosi, terapia o decisioni cliniche reali.
