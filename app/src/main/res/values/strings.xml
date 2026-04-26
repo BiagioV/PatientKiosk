@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PatientKiosk</string>
-    <string name="patient_code_hint">Codice paziente</string>
-    <string name="start_button">Inizia</string>
+
+    <string name="app_subtitle">Questionari clinici guidati per pazienti</string>
+
+    <string name="patient_identification_title">1. Identificazione paziente</string>
+    <string name="patient_identification_intro">Prima di iniziare, inserisci il codice paziente fornito dal personale sanitario.</string>
+    <string name="patient_code_label">Codice paziente</string>
+    <string name="patient_code_hint">Esempio: PZ001</string>
+    <string name="patient_code_help">Il codice deve contenere almeno 3 caratteri. Puoi usare lettere, numeri, trattino e underscore.</string>
+    <string name="patient_privacy_note">Per proteggere la privacy, non inserire nome, cognome, codice fiscale o altri dati personali.</string>
+
+    <string name="start_button">Inizia compilazione</string>
     <string name="select_questionnaire">Seleziona questionario</string>
     <string name="next_question">Prossima domanda</string>
     <string name="previous_question">Indietro</string>
