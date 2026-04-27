@@ -20,6 +20,9 @@ import it.uninsubria.patientkiosk.model.Questionnaire
 import it.uninsubria.patientkiosk.ui.QuestionnaireAdapter
 import it.uninsubria.patientkiosk.viewmodel.KioskUiState
 import it.uninsubria.patientkiosk.viewmodel.KioskViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
 
@@ -47,6 +50,9 @@ class MainActivity : ComponentActivity() {
     private lateinit var backButton: Button
     private lateinit var nextButton: Button
 
+    private lateinit var resultPatientText: TextView
+    private lateinit var resultQuestionnaireText: TextView
+    private lateinit var resultDateText: TextView
     private lateinit var resultScoreText: TextView
     private lateinit var resultInterpretationText: TextView
     private lateinit var resultDetailsText: TextView
@@ -93,9 +99,13 @@ class MainActivity : ComponentActivity() {
         backButton = findViewById(R.id.backButton)
         nextButton = findViewById(R.id.nextButton)
 
+        resultPatientText = findViewById(R.id.resultPatientText)
+        resultQuestionnaireText = findViewById(R.id.resultQuestionnaireText)
+        resultDateText = findViewById(R.id.resultDateText)
         resultScoreText = findViewById(R.id.resultScoreText)
         resultInterpretationText = findViewById(R.id.resultInterpretationText)
         resultDetailsText = findViewById(R.id.resultDetailsText)
+
         changeQuestionnaireButton = findViewById(R.id.changeQuestionnaireButton)
         restartButton = findViewById(R.id.restartButton)
     }
@@ -164,12 +174,16 @@ class MainActivity : ComponentActivity() {
         viewModel.state.observe(this) { state ->
             when (state) {
                 KioskUiState.PatientIdentification -> renderPatientIdentification()
+
                 is KioskUiState.QuestionnaireSelection -> renderSelection(
                     patientCode = state.patientCode,
                     questionnaires = state.questionnaires
                 )
+
                 is KioskUiState.QuestionForm -> renderQuestion(state)
+
                 is KioskUiState.Result -> renderResult(state)
+
                 is KioskUiState.Error -> showError(state.message)
             }
         }
@@ -285,18 +299,28 @@ class MainActivity : ComponentActivity() {
         questionSection.gone()
         resultSection.visible()
 
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", Locale.ITALY)
+        val compilationDate = LocalDateTime.now().format(formatter)
+
+        resultPatientText.text = getString(R.string.result_patient, state.patientCode)
+        resultQuestionnaireText.text = getString(
+            R.string.result_questionnaire,
+            state.questionnaire.title
+        )
+        resultDateText.text = getString(R.string.result_datetime, compilationDate)
+
         resultScoreText.text = state.result.formattedScore()
         resultInterpretationText.text = state.result.label
+
         resultDetailsText.text = buildString {
-            appendLine("Questionario: ${state.questionnaire.title}")
-            appendLine("Paziente: ${state.patientCode}")
-            appendLine()
             appendLine(state.result.description)
-            state.result.details.forEach {
-                appendLine("• $it")
+
+            if (state.result.details.isNotEmpty()) {
+                appendLine()
+                state.result.details.forEach { detail ->
+                    appendLine("• $detail")
+                }
             }
-            appendLine()
-            append("Nota: risultato informativo per supportare il colloquio clinico, non sostituisce la valutazione medica.")
         }
     }
 

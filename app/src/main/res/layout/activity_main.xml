@@ -280,38 +280,108 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/resultTitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="5. Risultato"
+                android:text="@string/result_title"
                 android:textColor="@color/clinical_text"
                 android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/resultPatientText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/clinical_muted"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/resultQuestionnaireText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/clinical_muted"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/resultDateText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/clinical_muted"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/resultScoreLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/result_score_label"
+                android:textColor="@color/clinical_text"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/resultScoreText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/card_background"
+                android:padding="16dp"
                 android:textColor="@color/clinical_blue_dark"
-                android:textSize="32sp"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/resultInterpretationLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="@string/result_interpretation_label"
+                android:textColor="@color/clinical_text"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/resultInterpretationText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/clinical_blue_dark"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/resultDetailsLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="@string/result_details_label"
                 android:textColor="@color/clinical_text"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/resultDetailsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:textColor="@color/clinical_muted"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/clinical_text"
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/resultDisclaimerText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/card_background"
+                android:padding="14dp"
+                android:text="@string/result_disclaimer"
+                android:textColor="@color/clinical_error"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/changeQuestionnaireButton"

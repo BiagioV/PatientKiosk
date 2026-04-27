@@ -25,6 +25,15 @@
     <string name="calculate_result">Calcola risultato</string>
     <string name="patient_summary">Paziente: %1$s</string>
 
+    <string name="result_title">4. Risultato questionario</string>
+    <string name="result_patient">Codice paziente: %1$s</string>
+    <string name="result_questionnaire">Questionario: %1$s</string>
+    <string name="result_datetime">Data compilazione: %1$s</string>
+    <string name="result_score_label">Punteggio calcolato</string>
+    <string name="result_interpretation_label">Interpretazione</string>
+    <string name="result_details_label">Dettagli</string>
+    <string name="result_disclaimer">Nota: PatientKiosk è un progetto didattico. Il risultato non sostituisce la valutazione del medico e non deve essere usato per diagnosi o decisioni cliniche reali.</string>
+
     <string name="start_button">Inizia compilazione</string>
     <string name="select_questionnaire">Seleziona questionario</string>
     <string name="next_question">Prossima domanda</string>
