@@ -1,9 +1,9 @@
 package it.uninsubria.patientkiosk
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.content.Context
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var patientCodeInput: EditText
     private lateinit var startButton: Button
+
     private lateinit var patientSummaryText: TextView
     private lateinit var questionnaireList: ListView
 
@@ -56,6 +57,7 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.activity_main)
 
         bindViews()
+
         viewModel = ViewModelProvider(this)[KioskViewModel::class.java]
         adapter = QuestionnaireAdapter(this, emptyList())
         questionnaireList.adapter = adapter
@@ -67,6 +69,7 @@ class MainActivity : ComponentActivity() {
 
     private fun bindViews() {
         errorText = findViewById(R.id.errorText)
+
         patientSection = findViewById(R.id.patientSection)
         selectionSection = findViewById(R.id.selectionSection)
         questionSection = findViewById(R.id.questionSection)
@@ -74,6 +77,7 @@ class MainActivity : ComponentActivity() {
 
         patientCodeInput = findViewById(R.id.patientCodeInput)
         startButton = findViewById(R.id.startButton)
+
         patientSummaryText = findViewById(R.id.patientSummaryText)
         questionnaireList = findViewById(R.id.questionnaireList)
 
@@ -122,11 +126,13 @@ class MainActivity : ComponentActivity() {
 
         nextButton.setOnClickListener {
             clearError()
+
             val selectedScore = selectedAnswerScore()
             if (selectedScore == null) {
                 showError("Seleziona una risposta prima di proseguire.")
                 return@setOnClickListener
             }
+
             viewModel.saveCurrentAnswer(selectedScore)
             viewModel.nextQuestion()
         }
@@ -147,7 +153,10 @@ class MainActivity : ComponentActivity() {
         viewModel.state.observe(this) { state ->
             when (state) {
                 KioskUiState.PatientIdentification -> renderPatientIdentification()
-                is KioskUiState.QuestionnaireSelection -> renderSelection(state.patientCode, state.questionnaires)
+                is KioskUiState.QuestionnaireSelection -> renderSelection(
+                    patientCode = state.patientCode,
+                    questionnaires = state.questionnaires
+                )
                 is KioskUiState.QuestionForm -> renderQuestion(state)
                 is KioskUiState.Result -> renderResult(state)
                 is KioskUiState.Error -> showError(state.message)
@@ -167,7 +176,8 @@ class MainActivity : ComponentActivity() {
         selectionSection.visible()
         questionSection.gone()
         resultSection.gone()
-        patientSummaryText.text = "Paziente: $patientCode"
+
+        patientSummaryText.text = getString(R.string.patient_summary, patientCode)
         adapter.update(questionnaires)
     }
 
@@ -179,20 +189,49 @@ class MainActivity : ComponentActivity() {
 
         val questionnaire = state.questionnaire
         val question = questionnaire.questions[state.currentIndex]
-        val progress = ((state.currentIndex + 1).toFloat() / questionnaire.questions.size * 100).toInt()
 
-        questionnaireTitleText.text = questionnaire.title
-        progressBar.progress = progress
-        progressText.text = "Domanda ${state.currentIndex + 1} di ${questionnaire.questions.size}"
+        val currentQuestionNumber = state.currentIndex + 1
+        val totalQuestions = questionnaire.questions.size
+        val progressPercentage = ((currentQuestionNumber.toFloat() / totalQuestions) * 100).toInt()
+
+        questionnaireTitleText.text = getString(
+            R.string.question_form_title_with_name,
+            questionnaire.title
+        )
+
+        progressBar.max = totalQuestions
+        progressBar.progress = currentQuestionNumber
+
+        progressText.text = getString(
+            R.string.question_progress,
+            currentQuestionNumber,
+            totalQuestions,
+            progressPercentage
+        )
+
+        progressText.contentDescription = getString(
+            R.string.question_progress_accessibility,
+            currentQuestionNumber,
+            totalQuestions,
+            progressPercentage
+        )
+
         questionText.text = question.text
+
         backButton.isEnabled = state.currentIndex > 0
-        nextButton.text = if (state.currentIndex == questionnaire.questions.lastIndex) "Calcola risultato" else getString(R.string.next_question)
+
+        nextButton.text = if (state.currentIndex == questionnaire.questions.lastIndex) {
+            getString(R.string.calculate_result)
+        } else {
+            getString(R.string.next_question)
+        }
 
         renderAnswers(question.answers, state.selectedAnswerScore)
     }
 
     private fun renderAnswers(options: List<AnswerOption>, selectedScore: Int?) {
         answersGroup.removeAllViews()
+
         options.forEach { option ->
             val radioButton = RadioButton(this).apply {
                 id = View.generateViewId()
@@ -203,6 +242,7 @@ class MainActivity : ComponentActivity() {
                 setPadding(8, 12, 8, 12)
                 isChecked = selectedScore == option.score
             }
+
             answersGroup.addView(radioButton)
         }
     }
@@ -220,7 +260,9 @@ class MainActivity : ComponentActivity() {
             appendLine("Paziente: ${state.patientCode}")
             appendLine()
             appendLine(state.result.description)
-            state.result.details.forEach { appendLine("• $it") }
+            state.result.details.forEach {
+                appendLine("• $it")
+            }
             appendLine()
             append("Nota: risultato informativo per supportare il colloquio clinico, non sostituisce la valutazione medica.")
         }
@@ -233,6 +275,7 @@ class MainActivity : ComponentActivity() {
     private fun selectedAnswerScore(): Int? {
         val checkedId = answersGroup.checkedRadioButtonId
         if (checkedId == -1) return null
+
         return answersGroup.findViewById<RadioButton>(checkedId)?.tag as? Int
     }
 

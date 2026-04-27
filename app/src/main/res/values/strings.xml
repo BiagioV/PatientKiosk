@@ -17,6 +17,12 @@
     <string name="questionnaire_item_meta">%1$d domande · massimo %2$d punti</string>
     <string name="questionnaire_item_action">Tocca per iniziare</string>
 
+    <string name="question_form_title_with_name">3. Compilazione - %1$s</string>
+    <string name="question_progress">Domanda %1$d di %2$d · %3$d%% completato</string>
+    <string name="question_progress_accessibility">Domanda %1$d di %2$d, avanzamento %3$d percento</string>
+    <string name="calculate_result">Calcola risultato</string>
+    <string name="patient_summary">Paziente: %1$s</string>
+
     <string name="start_button">Inizia compilazione</string>
     <string name="select_questionnaire">Seleziona questionario</string>
     <string name="next_question">Prossima domanda</string>
