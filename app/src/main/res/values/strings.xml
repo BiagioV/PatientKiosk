@@ -20,6 +20,8 @@
     <string name="question_form_title_with_name">3. Compilazione - %1$s</string>
     <string name="question_progress">Domanda %1$d di %2$d · %3$d%% completato</string>
     <string name="question_progress_accessibility">Domanda %1$d di %2$d, avanzamento %3$d percento</string>
+    <string name="answer_required_message">Seleziona una risposta per continuare.</string>
+    <string name="answer_required_error">Seleziona una risposta prima di proseguire.</string>
     <string name="calculate_result">Calcola risultato</string>
     <string name="patient_summary">Paziente: %1$s</string>
 

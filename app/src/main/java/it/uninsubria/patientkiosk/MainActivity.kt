@@ -43,6 +43,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var progressText: TextView
     private lateinit var questionText: TextView
     private lateinit var answersGroup: RadioGroup
+    private lateinit var answerHelpText: TextView
     private lateinit var backButton: Button
     private lateinit var nextButton: Button
 
@@ -86,6 +87,7 @@ class MainActivity : ComponentActivity() {
         progressText = findViewById(R.id.progressText)
         questionText = findViewById(R.id.questionText)
         answersGroup = findViewById(R.id.answersGroup)
+        answerHelpText = findViewById(R.id.answerHelpText)
         backButton = findViewById(R.id.backButton)
         nextButton = findViewById(R.id.nextButton)
 
@@ -118,6 +120,12 @@ class MainActivity : ComponentActivity() {
             viewModel.selectQuestionnaire(adapter.getItem(position))
         }
 
+        answersGroup.setOnCheckedChangeListener { _, _ ->
+            clearError()
+            answerHelpText.gone()
+            updateNextButtonState()
+        }
+
         backButton.setOnClickListener {
             clearError()
             saveSelectedAnswerIfPresent()
@@ -129,7 +137,9 @@ class MainActivity : ComponentActivity() {
 
             val selectedScore = selectedAnswerScore()
             if (selectedScore == null) {
-                showError("Seleziona una risposta prima di proseguire.")
+                answerHelpText.visible()
+                showError(getString(R.string.answer_required_error))
+                updateNextButtonState()
                 return@setOnClickListener
             }
 
@@ -227,9 +237,12 @@ class MainActivity : ComponentActivity() {
         }
 
         renderAnswers(question.answers, state.selectedAnswerScore)
+        answerHelpText.visible()
+        updateNextButtonState()
     }
 
     private fun renderAnswers(options: List<AnswerOption>, selectedScore: Int?) {
+        answersGroup.setOnCheckedChangeListener(null)
         answersGroup.removeAllViews()
 
         options.forEach { option ->
@@ -244,6 +257,16 @@ class MainActivity : ComponentActivity() {
             }
 
             answersGroup.addView(radioButton)
+        }
+
+        answersGroup.setOnCheckedChangeListener { _, _ ->
+            clearError()
+            answerHelpText.gone()
+            updateNextButtonState()
+        }
+
+        if (selectedScore != null) {
+            answerHelpText.gone()
         }
     }
 
@@ -277,6 +300,12 @@ class MainActivity : ComponentActivity() {
         if (checkedId == -1) return null
 
         return answersGroup.findViewById<RadioButton>(checkedId)?.tag as? Int
+    }
+
+    private fun updateNextButtonState() {
+        val hasSelectedAnswer = selectedAnswerScore() != null
+        nextButton.isEnabled = hasSelectedAnswer
+        nextButton.alpha = if (hasSelectedAnswer) 1.0f else 0.55f
     }
 
     private fun showError(message: String) {
