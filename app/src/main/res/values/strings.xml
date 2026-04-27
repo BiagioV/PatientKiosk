@@ -28,7 +28,8 @@
     <string name="start_button">Inizia compilazione</string>
     <string name="select_questionnaire">Seleziona questionario</string>
     <string name="next_question">Prossima domanda</string>
-    <string name="previous_question">Indietro</string>
+    <string name="previous_question">Domanda precedente</string>
+    <string name="back_to_questionnaire_selection">Cambia questionario</string>
     <string name="restart">Nuova compilazione</string>
     <string name="change_questionnaire">Cambia questionario</string>
 </resources>

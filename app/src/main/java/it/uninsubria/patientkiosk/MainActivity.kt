@@ -53,6 +53,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var changeQuestionnaireButton: Button
     private lateinit var restartButton: Button
 
+    private var currentQuestionIndexForNavigation: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -128,8 +130,7 @@ class MainActivity : ComponentActivity() {
 
         backButton.setOnClickListener {
             clearError()
-            saveSelectedAnswerIfPresent()
-            viewModel.previousQuestion()
+            handleQuestionBackNavigation()
         }
 
         nextButton.setOnClickListener {
@@ -200,6 +201,8 @@ class MainActivity : ComponentActivity() {
         val questionnaire = state.questionnaire
         val question = questionnaire.questions[state.currentIndex]
 
+        currentQuestionIndexForNavigation = state.currentIndex
+
         val currentQuestionNumber = state.currentIndex + 1
         val totalQuestions = questionnaire.questions.size
         val progressPercentage = ((currentQuestionNumber.toFloat() / totalQuestions) * 100).toInt()
@@ -228,7 +231,13 @@ class MainActivity : ComponentActivity() {
 
         questionText.text = question.text
 
-        backButton.isEnabled = state.currentIndex > 0
+        backButton.isEnabled = true
+        backButton.alpha = 1.0f
+        backButton.text = if (state.currentIndex == 0) {
+            getString(R.string.back_to_questionnaire_selection)
+        } else {
+            getString(R.string.previous_question)
+        }
 
         nextButton.text = if (state.currentIndex == questionnaire.questions.lastIndex) {
             getString(R.string.calculate_result)
@@ -289,6 +298,16 @@ class MainActivity : ComponentActivity() {
             appendLine()
             append("Nota: risultato informativo per supportare il colloquio clinico, non sostituisce la valutazione medica.")
         }
+    }
+
+    private fun handleQuestionBackNavigation() {
+        if (currentQuestionIndexForNavigation == 0) {
+            viewModel.backToSelection()
+            return
+        }
+
+        saveSelectedAnswerIfPresent()
+        viewModel.previousQuestion()
     }
 
     private fun saveSelectedAnswerIfPresent() {
