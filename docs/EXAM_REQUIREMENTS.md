@@ -15,11 +15,12 @@ Questionnaire.kt
 ScoreCalculator.kt
 ScoreResult.kt
 QuestionnaireAdapter.kt
+PatientCodeValidator.kt
 KioskViewModel.kt
 KioskUiState.kt
 ```
 
-L'interfaccia è definita tramite layout XML, mentre la logica applicativa, la gestione dello stato, il caricamento dei dati e il calcolo dei punteggi sono implementati in Kotlin.
+L'interfaccia è definita tramite layout XML, mentre la logica applicativa, la gestione dello stato, il caricamento dei dati, la validazione e il calcolo dei punteggi sono implementati in Kotlin.
 
 ## Gestione tramite Git
 
@@ -31,15 +32,22 @@ Repository:
 https://github.com/BiagioV/PatientKiosk
 ```
 
-Lo sviluppo viene organizzato tramite commit progressivi, in modo da mostrare l'evoluzione del progetto nel tempo.
+Lo sviluppo è stato organizzato tramite commit progressivi, in modo da mostrare l'evoluzione del progetto nel tempo.
 
-Ogni modifica significativa viene salvata tramite:
+Sono stati creati commit dedicati per:
 
-```bash
-git add .
-git commit -m "Descrizione della modifica"
-git push
-```
+- configurazione progetto;
+- documentazione iniziale;
+- validazione codice paziente;
+- miglioramento schermata iniziale;
+- miglioramento selezione questionario;
+- indicatore avanzamento domande;
+- gestione risposte mancanti;
+- navigazione indietro;
+- schermata risultato;
+- validazione calcoli e caricamento JSON;
+- documentazione test e architettura;
+- aggiornamento README finale.
 
 ## Esecuzione da Android Studio
 
@@ -56,6 +64,26 @@ Procedura:
 
 Durante la presentazione sarà quindi possibile mostrare sia l'esecuzione dell'app sia il codice sorgente.
 
+## Obiettivo PatientKiosk
+
+Il progetto realizza una applicazione tablet/kiosk per la compilazione guidata di questionari clinici da parte dei pazienti.
+
+Il flusso implementato è:
+
+```text
+Identificazione paziente
+        ↓
+Selezione questionario
+        ↓
+Compilazione domande
+        ↓
+Calcolo score
+        ↓
+Output risultato
+```
+
+Questo segue lo schema logico richiesto dalla traccia del progetto.
+
 ## Focus: usabilità clinica
 
 L'app è pensata per essere utilizzata da un paziente su tablet, in sala d'attesa o durante una visita.
@@ -65,10 +93,13 @@ Scelte progettuali:
 - flusso semplice e guidato;
 - una domanda alla volta;
 - testi chiari e leggibili;
-- inserimento del codice paziente;
-- selezione del questionario da compilare;
+- inserimento tramite codice paziente;
+- avviso di non inserire nome, cognome o dati personali;
+- selezione chiara del questionario;
+- indicatore di avanzamento;
+- pulsanti grandi e facili da usare;
 - risultato finale mostrato in modo comprensibile;
-- assenza di passaggi tecnici visibili al paziente.
+- disclaimer didattico nella schermata risultato.
 
 ## Focus: correttezza dei calcoli
 
@@ -87,7 +118,24 @@ Questa separazione permette di:
 - rendere il codice più leggibile;
 - facilitare eventuali test futuri.
 
-Il punteggio viene calcolato a partire dalle risposte selezionate dal paziente.
+Tipi di calcolo supportati:
+
+- `SUM`;
+- `WHO5_PERCENTAGE`;
+- `HADS_SUBSCALES`.
+
+Esempi implementati:
+
+- DLQI demo: somma dei punteggi delle risposte;
+- WHO-5 demo: punteggio grezzo moltiplicato per 4;
+- HADS demo: calcolo separato delle sottoscale ansia e depressione.
+
+La logica controlla anche:
+
+- presenza di tutte le risposte;
+- coerenza tra punteggio massimo dichiarato e punteggio massimo calcolabile;
+- validità dei punteggi selezionati;
+- punteggio finale dentro l'intervallo previsto.
 
 ## Focus: robustezza dell'interfaccia
 
@@ -104,24 +152,38 @@ Questa scelta permette di separare:
 - logica della schermata;
 - dati del questionario;
 - stato della compilazione;
+- risposte già selezionate;
 - risultato finale.
 
-L'app mantiene il flusso della compilazione in modo controllato, evitando che l'utente debba gestire manualmente la navigazione tra i dati.
+Funzionalità di robustezza implementate:
+
+- il pulsante avanti è disabilitato se non è stata selezionata una risposta;
+- la risposta selezionata viene mantenuta quando si torna indietro;
+- dalla prima domanda è possibile tornare alla selezione del questionario;
+- è possibile iniziare una nuova compilazione dopo il risultato;
+- gli errori vengono mostrati in modo visibile all'utente.
 
 ## Focus: gestione degli errori
 
 L'app prevede controlli per ridurre gli errori di inserimento e di utilizzo.
 
-Esempi di controlli previsti o da migliorare:
+Controlli implementati:
 
 - codice paziente mancante;
-- codice paziente non valido;
-- questionario non selezionato;
+- codice paziente troppo corto;
+- codice paziente con caratteri non validi;
 - risposta non selezionata;
 - errore nel caricamento del file JSON;
-- dati del questionario non corretti o incompleti.
+- questionario senza domande;
+- questionario senza interpretazioni;
+- domande duplicate;
+- risposte duplicate;
+- punteggi negativi;
+- `maxScore` non coerente;
+- configurazione HADS non valida;
+- punteggio calcolato fuori intervallo.
 
-I messaggi di errore devono essere semplici e comprensibili per l'utente finale.
+I messaggi di errore sono pensati per essere semplici e comprensibili per l'utente finale.
 
 ## Focus: modularità
 
@@ -136,35 +198,23 @@ app/src/main/assets/questionnaires.json
 Ogni questionario contiene:
 
 - id;
-- nome;
+- titolo;
 - descrizione;
+- fonte;
+- tipo di scoring;
+- punteggio massimo;
 - domande;
 - risposte possibili;
 - punteggi;
-- tipo di calcolo;
-- interpretazioni.
+- fasce di interpretazione.
 
-Questa struttura permette di aggiungere o modificare questionari senza dover riscrivere la logica principale dell'applicazione.
+Questa struttura permette di aggiungere o modificare questionari senza dover riscrivere la struttura principale dell'applicazione.
 
-## Flusso logico implementato
-
-```text
-Identificazione paziente
-        ↓
-Selezione questionario
-        ↓
-Compilazione domande
-        ↓
-Calcolo score
-        ↓
-Output risultato
-```
-
-Questo flusso segue la struttura richiesta dal progetto PatientKiosk.
+Se un nuovo questionario usa un tipo di scoring già supportato, è sufficiente aggiungerlo al JSON rispettando la struttura prevista.
 
 ## Questionari gestiti
 
-Il progetto include questionari dimostrativi relativi a:
+Il progetto include tre questionari dimostrativi:
 
 - DLQI demo;
 - WHO-5 demo;
@@ -180,28 +230,86 @@ Per un utilizzo reale sarebbe necessario:
 - proteggere i dati personali e sanitari;
 - rispettare le normative sulla privacy.
 
+## Documentazione prodotta
+
+La documentazione si trova nella cartella:
+
+```text
+docs/
+```
+
+File principali:
+
+- `EXAM_REQUIREMENTS.md`: copertura dei requisiti d'esame;
+- `TESTING.md`: test manuali effettuati;
+- `ARCHITECTURE.md`: architettura del progetto;
+- `SOURCES.md`: riferimenti e fonti.
+
+## Test manuali
+
+I test manuali sono documentati in:
+
+```text
+docs/TESTING.md
+```
+
+Sono stati considerati test su:
+
+- codice paziente valido e non valido;
+- visualizzazione questionari;
+- avvio compilazione;
+- risposta mancante;
+- avanzamento domande;
+- navigazione indietro;
+- cambio questionario;
+- nuova compilazione;
+- calcolo DLQI demo;
+- calcolo WHO-5 demo;
+- calcolo HADS demo;
+- caricamento e validazione del JSON.
+
 ## Stato attuale del progetto
 
-Funzionalità già presenti:
+Funzionalità presenti:
 
 - progetto Android nativo in Kotlin;
+- repository GitHub con commit progressivi;
 - caricamento questionari da JSON;
+- validazione struttura questionari;
+- identificazione tramite codice paziente;
+- validazione codice paziente;
 - visualizzazione dei questionari disponibili;
 - compilazione guidata;
+- indicatore avanzamento;
+- gestione risposte mancanti;
+- navigazione avanti/indietro;
 - calcolo automatico dello score;
-- schermata risultato;
-- struttura modulare;
-- documentazione di base;
-- gestione tramite repository GitHub.
+- gestione di sottoscale HADS;
+- schermata risultato clinicamente leggibile;
+- disclaimer didattico;
+- documentazione di architettura;
+- documentazione dei test;
+- README finale aggiornato.
 
-## Miglioramenti previsti
+## Limiti noti
 
-Funzionalità da migliorare nei prossimi commit:
+Il progetto è didattico e presenta alcuni limiti:
 
-- validazione più completa del codice paziente;
-- interfaccia più adatta a tablet;
-- messaggi di errore più chiari;
-- indicatore di avanzamento delle domande;
-- schermata risultato più clinica;
-- documentazione dei test manuali;
-- miglioramento della gestione degli errori sul caricamento JSON.
+- i risultati non vengono salvati in un database;
+- non è presente autenticazione;
+- non è presente esportazione PDF;
+- non è presente integrazione con sistemi clinici reali;
+- i questionari sono demo/parafrasati;
+- l'app non deve essere usata per diagnosi o decisioni cliniche reali.
+
+## Conclusione
+
+PatientKiosk soddisfa i requisiti principali del progetto:
+
+- applicazione Android sviluppata in Kotlin;
+- gestione tramite Git;
+- compilazione guidata di questionari clinici;
+- caricamento dei questionari da JSON;
+- calcolo automatico dello score;
+- output risultato;
+- attenzione a usabilità, robustezza, errori e modularità.
